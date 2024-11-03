@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Coser_Fabiana_Lab2.Data;
 using Coser_Fabiana_Lab2.Models;
 
-namespace Coser_Fabiana_Lab2.Pages.Books
+namespace Coser_Fabiana_Lab2.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Coser_Fabiana_Lab2.Pages.Books
             _context = context;
         }
 
-        public Book Book { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,20 +28,14 @@ namespace Coser_Fabiana_Lab2.Pages.Books
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .Include(b => b.Authors)
-                .Include(b => b.Publisher)
-                 .Include(b => b.BookCategories) // Include BookCategories pentru a preveni NullReferenceException
-            .ThenInclude(bc => bc.Category) // Include și categoria aferentă fiecărei legături BookCategory
-        .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (book == null)
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else
             {
-                Book = book;
+                Category = category;
             }
             return Page();
         }
