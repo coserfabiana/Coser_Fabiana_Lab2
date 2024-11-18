@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Coser_Fabiana_Lab2.Data;
 using Coser_Fabiana_Lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Coser_Fabiana_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : BookCategoriesPageModel
     {
         private readonly Coser_Fabiana_Lab2.Data.Coser_Fabiana_Lab2Context _context;
